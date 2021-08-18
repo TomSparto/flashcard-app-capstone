@@ -11,8 +11,8 @@
       "id": 2
     },
     {
-      "name": "Test",
-      "description": "This is a test deck",
+      "name": "awderfgrg",
+      "description": "awd",
       "id": 3
     }
   ],
@@ -55,8 +55,8 @@
       "id": 7
     },
     {
-      "front": "Test Card Front",
-      "back": "Test Card Back",
+      "front": "testWD",
+      "back": "test",
       "deckId": 3,
       "id": 8
     }

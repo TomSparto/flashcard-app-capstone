@@ -5,7 +5,6 @@ function BadStudy({ currentDeck }) {
   const { name, id, cards } = currentDeck;
   const { url } = useRouteMatch();
   const newUrl = url.split("study").splice(0, 1);
-  console.log(newUrl);
   return (
     Object.keys(currentDeck).length > 0 && (
       <div>

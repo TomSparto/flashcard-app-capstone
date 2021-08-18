@@ -1,24 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { createDeck } from "../utils/api";
+import DeckForm from "./DeckForm.js";
 
-function CreateDeck({ decks }) {
-  const [title, setTitle] = useState("");
-  console.log(title);
-  const [description, setDescription] = useState("");
+function CreateDeck({ decks, name, setName, description, setDescription }) {
   const history = useHistory();
-
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
-  };
 
   const handleSubmit = async () => {
     await createDeck({
-      name: title,
-      description: description,
+      name,
+      description,
     });
 
     history.push(`${decks.length + 1}`);
@@ -38,27 +29,12 @@ function CreateDeck({ decks }) {
         </ol>
       </nav>
       <h2>Create Deck</h2>
-      <form className="d-flex flex-column">
-        <label className="font-weight-bold" name="title" id="title">
-          Title:
-          <input
-            type="text"
-            style={{ width: "100%" }}
-            value={title}
-            placeholder="Deck Name"
-            onChange={handleTitleChange}
-          />
-        </label>
-        <label className="font-weight-bold" name="description" id="description">
-          Description:
-          <textarea
-            style={{ width: "100%" }}
-            value={description}
-            placeholder="brief description of the deck"
-            onChange={handleDescriptionChange}
-          ></textarea>
-        </label>
-      </form>
+      <DeckForm
+        name={name}
+        setName={setName}
+        description={description}
+        setDescription={setDescription}
+      />
       <Link to="/">
         <button type="button" className="btn btn-secondary mr-3 my-3">
           Cancel

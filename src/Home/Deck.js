@@ -4,12 +4,13 @@ import { readDeck } from "../utils/api";
 
 import DeckView from "./DeckView.js";
 import AddCard from "./AddCard.js";
-import EditDeck from "./EditDeck.js";
 import EditCard from "./EditCard.js";
 import Study from "./Study.js";
 
 function Deck() {
   const [currentDeck, setCurrentDeck] = useState({});
+  const [front, setFront] = useState("");
+  const [back, setBack] = useState("");
   const { path } = useRouteMatch();
   const { deckId } = useParams();
 
@@ -26,13 +27,22 @@ function Deck() {
         <DeckView currentDeck={currentDeck} />
       </Route>
       <Route exact path={`${path}/cards/new`}>
-        <AddCard currentDeck={currentDeck} />
-      </Route>
-      <Route exact path={`${path}/edit`}>
-        <EditDeck currentDeck={currentDeck} setCurrentDeck={setCurrentDeck} />
+        <AddCard
+          currentDeck={currentDeck}
+          front={front}
+          setFront={setFront}
+          back={back}
+          setBack={setBack}
+        />
       </Route>
       <Route exact path={`${path}/cards/:cardId/edit`}>
-        <EditCard currentDeck={currentDeck} />
+        <EditCard
+          currentDeck={currentDeck}
+          front={front}
+          setFront={setFront}
+          back={back}
+          setBack={setBack}
+        />
       </Route>
       <Route exact path="/decks/:deckId/study">
         <Study currentDeck={currentDeck} />

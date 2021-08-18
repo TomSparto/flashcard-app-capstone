@@ -7,9 +7,12 @@ import { listDecks } from "../utils/api/index.js";
 import Home from "../Home/Home.js";
 import CreateDeck from "../Home/CreateDeck.js";
 import Deck from "../Home/Deck.js";
+import EditDeck from "../Home/EditDeck.js";
 
 function Layout() {
   const [decks, setDecks] = useState([]);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   useEffect(() => {
     async function getDecks() {
       const response = await listDecks();
@@ -28,7 +31,21 @@ function Layout() {
             <Home decks={decks} />
           </Route>
           <Route exact path="/decks/new">
-            <CreateDeck decks={decks} />
+            <CreateDeck
+              decks={decks}
+              name={name}
+              setName={setName}
+              description={description}
+              setDescription={setDescription}
+            />
+          </Route>
+          <Route exact path={`/decks/:deckId/edit`}>
+            <EditDeck
+              name={name}
+              setName={setName}
+              description={description}
+              setDescription={setDescription}
+            />
           </Route>
           <Route path="/decks/:deckId">
             <Deck />

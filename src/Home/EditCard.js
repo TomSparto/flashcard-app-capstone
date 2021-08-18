@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { readCard, updateCard } from "../utils/api";
+import CardForm from "./CardForm.js";
 
-function EditCard({ currentDeck }) {
+function EditCard({ currentDeck, front, setFront, back, setBack }) {
   const [currentCard, setCurrentCard] = useState({});
   const { name, id } = currentDeck;
   const { cardId } = useParams();
@@ -16,19 +17,16 @@ function EditCard({ currentDeck }) {
     getCard();
   }, [cardId]);
 
-  const handleFrontChange = (event) => {
-    setCurrentCard({ ...currentCard, front: event.target.value });
-  };
-  const handleBackChange = (event) => {
-    setCurrentCard({ ...currentCard, back: event.target.value });
-  };
+  useEffect(() => {
+    setFront(currentCard.front);
+    setBack(currentCard.back);
+  }, [setFront, setBack, currentCard.front, currentCard.back]);
 
   const handleSubmit = async (currentCard) => {
-    await updateCard(currentCard);
+    await updateCard({ ...currentCard, front, back });
     history.push(`/decks/${id}`);
     history.go(0);
   };
-  console.log(currentCard);
   return (
     <div>
       <nav aria-label="breadcrumb">
@@ -45,25 +43,12 @@ function EditCard({ currentDeck }) {
         </ol>
       </nav>
       <h2>Edit Card</h2>
-      <form className="d-flex flex-column">
-        <label className="font-weight-bold" name="front" id="front">
-          Front:
-          <input
-            type="text"
-            style={{ width: "100%" }}
-            value={currentCard.front}
-            onChange={handleFrontChange}
-          />
-        </label>
-        <label className="font-weight-bold" name="back" id="back">
-          Back:
-          <textarea
-            style={{ width: "100%" }}
-            value={currentCard.back}
-            onChange={handleBackChange}
-          ></textarea>
-        </label>
-      </form>
+      <CardForm
+        front={front}
+        setFront={setFront}
+        back={back}
+        setBack={setBack}
+      />
       <Link to={`/decks/${id}`}>
         <button type="button" className="btn btn-secondary mr-3">
           Cancel
